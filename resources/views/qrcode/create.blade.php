@@ -18,7 +18,6 @@
 @endphp
     <div class="bg-light p-3 rounded">
         <div class="container">
-            <form action="">
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label"> Name </label>
                     <select name="qrcode_type" id="qrcode_type" class="form-control">
@@ -29,7 +28,7 @@
                 </div>
                 <div class="mb-3" id="template">
                 </div>
-            </form>
+                <button id="next"> Next </button>
         </div>
     </div>
 @endsection

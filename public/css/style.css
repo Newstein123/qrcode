@@ -1,0 +1,20 @@
+.box {
+    display: inline-block;
+    width: 200px;
+    height: 103px;
+    border: 1px solid black;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+.selected {
+    border: 2px solid blue;
+    box-shadow: 1px 2px 1px grey;
+}
+
+.box img {
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+}

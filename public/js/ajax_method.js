@@ -12,5 +12,14 @@ $(document).ready(function() {
                 console.log(e)
             }
         })
-    })
+    });
+
+    $('.box').on('click', function() {
+            $('.box').removeClass('selected'); // Remove 'selected' class from all boxes
+            $(this).addClass('selected'); // Add 'selected' class to the clicked box
+            var selectedItemValue = $(this).find('p').text();
+            console.log(selectedItemValue)
+            $('#next').on('click', function() {
+     })
+    });
 })
