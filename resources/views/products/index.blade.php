@@ -10,12 +10,16 @@
                             {{ $product->name }}
                         </div>
                         <div class="card-body">
-                            <p> <span class="fw-bold"> Type </span> : {{ $product->type }} </p>
-                            <p> <span class="fw-bold"> Model No </span> : {{ $product->model_no }} </p>
-                            <p> <span class="fw-bold"> Country </span> : {{ $product->country }} </p>
-                            <p> <span class="fw-bold"> Export Date </span> : {{ $product->export_date }} </p>
+                            <div class="card-img">
+                                <img src="{{$product->image}}" alt="">
+                            </div>
+                            <p> <span class="fw-bold"> Type </span> : {{ $product->type}} </p>
+                            <p> <span class="fw-bold"> Model No </span> : {{ $product->model_no}} </p>
+                            <p> <span class="fw-bold"> Country </span> : {{ $product->country}} </p>
+                            <p> <span class="fw-bold"> Start Date </span> : {{ $product->start_date }} </p>
+                            <p> <span class="fw-bold"> Manufactured Year </span> : {{ $product->manufactured_year }} </p>
                             <p> <span class="fw-bold"> Usage </span> : {{ $product->usage }}  </p>
-                            <p> <span class="fw-bold"> Description </span> : {{ $product->description }} </p>
+                            <p> <span class="fw-bold"> Detail </span> : {{ $product->detail}} </p>
                         </div>
                         <div class="card-footer">
                             <a href="{{route('productView', $product->id) }}" class="btn btn-secondary"> View Product  </a>
@@ -24,7 +28,8 @@
                 </div>
             @endforeach
         </div>
+        <div class="pagination-links">
+            {!! $links !!}
+        </div>        
     </div>
-
-{{ $products->links() }}
 @endsection
