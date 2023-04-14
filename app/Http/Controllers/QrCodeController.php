@@ -85,10 +85,20 @@ class QrCodeController extends Controller
 
     public function getTemplate(Request $request)
     {
-        if($request->type == 'Personal Use') {
-            return view('template.personaluse');
-        } else {
-            return view('template.default');
+        $image_name = $request->image_name;
+        if($image_name == 'res_contactless_menu') {
+            return view('template.res_contactless');
         }
+    }
+
+    public function storeTemplate(Request $request)
+    {
+        $pdf = $request->file('pdf_file');
+        $image = $request->file('preview_image');
+        $company = $request->company;
+        $title = $request->title;
+        $description = $request->description;
+        $website = $request->website;
+        $feedback = $request->feedback;
     }
 }

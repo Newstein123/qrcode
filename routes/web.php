@@ -36,3 +36,4 @@ Route::post('/admin/product/create', [AdminProductController::class, 'store'])->
 
 Route::get('/qr/create',[QrCodeController::class, 'create'] )->name('qrCreate');
 Route::get('/qr/getTemplate', [QrCodeController::class, 'getTemplate'])->name('getTemplate');
+Route::post('/qr/getTemplate/store', [QrCodeController::class, 'storeTemplate'])->name('templateSubmit');
