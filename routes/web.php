@@ -23,7 +23,7 @@ Route::get('/', function () {
 // frontend 
 
 Route::get('/product', [ProductController::class, 'index'])->name('productList');
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('productView');
+Route::get('/fire_qr/{code}', [ProductController::class, 'show'])->name('productView');
 
 // admin 
 

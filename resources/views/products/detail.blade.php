@@ -1,27 +1,29 @@
 @extends('layouts.app')
 @section('content')
-    @if($product->status == 0)
+    @if($product->publish == 0)
         <div class="container my-5">
             <div class="card">
                 <div class="card-header">
                     {{ $product->name }}
                 </div>
                 <div class="card-body">
-                    <p> <span class="fw-bold"> Type </span> : {{ $product->type }} </p>
+                    <div class="card-img">
+                        @foreach ($product->images as $image)
+                            <img src="{{$image}}" alt="" class="img-fluid w-100">
+                        @endforeach
+                    </div>
+                    <p> <span class="fw-bold"> အမျိုးအစား </span> : {{ $product->type }} </p>
                     <p> <span class="fw-bold"> Model No </span> : {{ $product->model_no }} </p>
-                    <p> <span class="fw-bold"> Country </span> : {{ $product->country }} </p>
-                    <p> <span class="fw-bold"> Export Date </span> : {{ $product->country }} </p>
+                    <p> <span class="fw-bold"> ထုတ်လုပ်သည့်တိုင်းပြည် </span> : {{ $product->country }} </p>
+                    <p> <span class="fw-bold"> စတင်အသုံးပြုသည့်ရက်စွဲ </span> : {{ $product->start_date }} </p>
+                    <p> <span class="fw-bold"> ထုတ်လုပ်သည့်ခုနှစ်  </span> : {{ $product->manufactured_year}} </p>   
                     <p> <span class="fw-bold"> Usage </span> : {{ $product->usage }}  </p>
-                    <p> <span class="fw-bold"> Description </span> : {{ $product->description }} </p>
+                    <p> <span class="fw-bold"> Detail </span> : {{ $product->detail }} </p>
                     <p class="text-center"> Scan This Qr Code </p>
                     <div class="visible-print text-center">
-                        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->merge(public_path('fsd-qr-img.jpg'), 0.2, true)->generate(url('/product/'.$product->id))) !!} ">
-                    </div>
-                    <div class="card-footer my-2">
-                        <form action="{{route('qrDownload', $product->id)}}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-secondary"> Download </button>
-                        </form>
+                        @if ($product->qr_img != '')
+                            <img src="{{$product->qr_img}}" alt="" class="w-25 img-fluid">
+                        @endif
                     </div>
                 </div>
             </div>

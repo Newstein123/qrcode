@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use App\Models\Product;
+use App\Models\ProductQr;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -11,36 +12,40 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ProductController extends Controller
 {
     public function index(Request $request)
-    {      
+    {   
+        $products = ProductQr::paginate(12) ;
         
+        // $page = request('page') ?? 1;
+        // $perpage = request('perpage') ?? 10;
+        // $client = new Client();
+        // $response = $client->request('GET', 'http://localhost:8000/api/product/?page='.$page.'&perpage='.$perpage);
+        // $statusCode = $response->getStatusCode(); // e.g. 200
+        // $body = $response->getBody();
+        // $data = json_decode($body, true);
+        // $product_data = $data['data'];
+        // $total = $data['total'];
+        // $products = collect(array_map(function ($item) {
+        //     return (object) $item;
+        // }, $product_data));
+
+        // $paginator = new LengthAwarePaginator(
+        //     $products->forPage($page, $perpage), // data for the current page
+        //     $total, // total number of items
+        //     $perpage, // items per page
+        //     $page, // current page
+        //     ['path' => $request->url()] // additional query parameters
+        // );
+        return view('products.index', compact('products'));
+    }
+
+    public function show($code)
+    {
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:8000/api/product');
+        $response = $client->request('GET', 'http://localhost:8000/api/fire_qr/'.$code);
         $statusCode = $response->getStatusCode(); // e.g. 200
         $body = $response->getBody();
         $data = json_decode($body, true);
-        $product_data = $data['data'];
-        $links = $data['links'];
-        $meta = $data['meta'];
-        $total = $data['total'];
-        $products = collect(array_map(function ($item) {
-            return (object) $item;
-        }, $product_data));
-
-        // / Create a paginator object
-        $currentPage = $data['meta']['current_page'];
-        $perPage = $data['meta']['per_page'];
-        $total = $data['meta']['total'];
-        $paginationLinks = $data['links'];
-        $paginator = new LengthAwarePaginator($products, $total, $perPage, $currentPage);
-
-        // Generate pagination links
-        $links = $paginator->links('pagination::bootstrap-4', ['paginator' => $paginationLinks]);
-        return view('products.index', compact('products', 'links'));
-    }
-
-    public function show($id)
-    {
-        $product = Product::findOrFail($id);
+        $product = (object) $data['data'];
         return view('products.detail', compact('product'));   
     }
 
