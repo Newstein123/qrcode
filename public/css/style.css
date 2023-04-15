@@ -18,3 +18,33 @@
     height: 100px;
     border-radius: 10px;
 }
+
+.primary_color {
+    height: 10px;
+    width: 80px;
+    margin: 20px 0;
+}
+
+.button_color {
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+}
+
+.template_design_box {
+    height: 100px;
+}
+
+.preview_box {
+    padding: 10px;
+    margin: 10px 5px;
+    border: 1px solid black;
+}
+
+.preview_header {
+    border: none;
+    padding: none;
+    height: 200px;
+    background-color: aqua;
+    color: black;
+}

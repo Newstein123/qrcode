@@ -37,3 +37,7 @@ Route::post('/admin/product/create', [AdminProductController::class, 'store'])->
 Route::get('/qr/create',[QrCodeController::class, 'create'] )->name('qrCreate');
 Route::get('/qr/getTemplate', [QrCodeController::class, 'getTemplate'])->name('getTemplate');
 Route::post('/qr/getTemplate/store', [QrCodeController::class, 'storeTemplate'])->name('templateSubmit');
+Route::get('/qr_codes', [QrCodeController::class, 'get_all_qrs'])->name('allQr');
+Route::get('/qr/{id}', [QrCodeController::class, 'show'])->name('viewQr');
+Route::get('/qr_code/{code}', [QrCodeController::class, 'showTemplate'])->name('showTemplate');
+Route::get('/get_preview_template/{name}', [QrCodeController::class, 'get_preview_template'])->name('getPreviewTemplate');

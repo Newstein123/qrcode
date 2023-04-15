@@ -5,13 +5,14 @@ $(document).ready(function() {
         if(qrcode_type == 'Resturant and Bars') {
             $('#template').append(`
                 <div class="d-flex"> 
-                <img src="/template/res_temp.jpg" alt="res_contactless_menu" class="w-25 img-fluid me-3 res-img">
-                <img src="/template/res_temp2.jpg" alt="res_social_media" class="w-25 img-fluid res-img">
+                <img src="/template/res_temp.jpg" alt="res_contactless_menu" class="w-50 img-fluid me-3 res-img selected">
+                <img src="/template/res_temp2.jpg" alt="res_social_media" class="w-50 img-fluid res-img">
                 </div> 
             `)
         } else {
             console.log('not match ')
         }
+        getPreviewTemplate('res_contactless_menu')
         selectedImage()
     });
 
@@ -20,8 +21,21 @@ $(document).ready(function() {
             $(".res-img").not(this).removeClass("selected");
             $(this).addClass('selected');
             var alt = $(this).attr("alt");
-            $('#next').prop("disabled", false);
+            getPreviewTemplate(alt)
             getTempate(alt)
+        })
+    }
+
+    function getPreviewTemplate(name) {
+        $.ajax({
+            url : `/get_preview_template/${name}`,
+            method : 'GET',
+            success : function(data) {
+                $('.preview_template').html(data)
+            },
+            error : function(e) {
+                console.log(e)
+            }
         })
     }
 
@@ -42,15 +56,6 @@ $(document).ready(function() {
         })
     }
 
-
-    $('.box').on('click', function() {
-            $('.box').removeClass('selected'); // Remove 'selected' class from all boxes
-            $(this).addClass('selected'); // Add 'selected' class to the clicked box
-            var selectedItemValue = $(this).find('p').text();
-            console.log(selectedItemValue)
-            $('#next').on('click', function() {
-     })
-    });
 })
 
 function templateSubmit(event) {

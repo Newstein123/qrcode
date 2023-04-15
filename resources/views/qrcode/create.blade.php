@@ -17,6 +17,9 @@
     ]
 @endphp
     <div class="bg-light p-3 rounded">
+        <div>
+            <a href="{{route('allQr')}}" class="btn btn-secondary btn-sm"> See All QR </a>
+        </div>
         <div class="container">
             {{-- Main Box  --}}
             <div id="main_box">
@@ -28,13 +31,16 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="mb-3" id="template">
+                <div class="row">
+                    <div class="mb-3 col-md-6" id="template">
+                    </div>
+                    <div class="preview_template col-md-6">
+                    </div>
                 </div>
-                <button id="next" class="btn btn-primary btn-sm"  disabled> Next </button>
+                <button id="next" class="btn btn-primary btn-sm"> Next </button>
             </div>
             {{-- Template Box  --}}
-            <div id="template_box">
-                
+            <div id="template_box">          
             </div>
         </div>
     </div>

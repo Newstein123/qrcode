@@ -5,15 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class QrCode extends Model
+class Scan extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
-
-    public function design()
-    {
-        return $this->belongsTo(Design::class);
-    }
-
 }
