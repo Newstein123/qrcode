@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('primary_color');
             $table->string('button_color');
+            $table->string('primary_text_color');
+            $table->string('button_text_color');
             $table->timestamps();
         });
     }

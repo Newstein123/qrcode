@@ -48,3 +48,23 @@
     background-color: aqua;
     color: black;
 }
+
+.social_preview_box {
+    position: relative;
+}
+
+.shared_link_button {
+    position: absolute;
+    padding: 10px;
+    text-align: center;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 50%;
+    background-color: aqua;
+    box-shadow: 1px 2px 1px #000;
+}
+
+.modal-dialog {
+    max-width: 80%;
+  }
+  

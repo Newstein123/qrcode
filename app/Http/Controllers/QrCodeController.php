@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Design;
 use App\Models\QrCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
 class QrCodeController extends Controller
@@ -47,9 +48,11 @@ class QrCodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function get_qr_design(Request $request)
+    {   
+        $eye = $request->eye;
+        $style = $request->style;
+        return view('qrcode.qr_design', compact('style', 'eye'));
     }
 
     /**
@@ -75,6 +78,8 @@ class QrCodeController extends Controller
         $qr_code = QrCode::where('qr_name', $code)->first();
         if($qr_code->template_id == 1) {
             return view('show_template.res_contactless', compact('qr_code'));
+        } elseif($qr_code->template_id == 2) {
+            return view('show_template.res_social_media', compact('qr_code'));
         }
 
         return redirect()->back();
@@ -105,12 +110,16 @@ class QrCodeController extends Controller
 
     public function getTemplate(Request $request)
     {
-        $image_name = $request->image_name;   
+        $image_name = $request->image_name; 
         return getTemplate($image_name);
     }
 
     public function storeTemplate(Request $request)
-    {
+    {      
+
+        $template_name = $request->template_name;
+
+        // Contactless Menu 
         $pdf = $request->file('pdf_file');
         $image = $request->file('preview_image');
         $company = $request->company;
@@ -121,17 +130,32 @@ class QrCodeController extends Controller
         $primary_color = $request->primary_color;
         $button_color = $request->button_color;
         $template_id = $request->template->id ?? 1;
+        $design_id = $request->design_id;
         $user_id = 1;
 
-        // storing design 
+        // Socail Media
 
-        if($primary_color && $button_color) {
+        $headline = $request->headline;
+        $about_us = $request->about_us;
+        $facebook_url = $request->facebook_url;
+        $facebook_text = $request->facebook_text;
+        $twitter_url = $request->twitter_url;
+        $twitter_text = $request->twitter_text;
+        $web_url = $request->web_url;
+        $web_text = $request->web_text;
+        $shared_link = $request->shared_link;
+
+    
+        // storing design if the colors are not exist 
+
+        if(!Design::where('primary_color', $primary_color)->where('button_color', $button_color)->exists()) {
             $design = Design::create([
                 'primary_color' => $primary_color,
                 'button_color' => $button_color,
             ]);
-        }
-        $design_id = $request->design_id ?? $design->id;
+            $design_id = $design->id;
+        } 
+
         // storing pdf 
 
         if($request->hasFile('pdf_file')) {
@@ -148,14 +172,29 @@ class QrCodeController extends Controller
 
         $qr_name = generateRandomString(10);
 
-        $info = array(
-            'pdf' => $pdf_name,
-            'perview_image' => $image_name,
-            'company' => $company,
-            'title' => $title,
-            'description' => $description,
-            'website' => $website,
-        );
+        if($template_name == 'res_contactless_menu') {
+            $info = array(
+                'pdf' => $pdf_name,
+                'perview_image' => $image_name,
+                'company' => $company,
+                'title' => $title,
+                'description' => $description,
+                'website' => $website,
+            );
+        } elseif($template_name == 'res_socail_media') {
+            $info = array(
+                'preview_image' => $image_name,
+                'headline' => $headline,
+                'about_us' => $about_us,
+                'facebook_url' => $facebook_url,
+                'facebook_text' => $facebook_text,
+                'twitter_url' => $twitter_url,
+                'twitter_text' => $twitter_text,
+                'web_url' => $web_url,
+                'web_text' => $web_text,
+                'shared_link' => $shared_link,
+            );  
+        }
 
         QrCode::create([
             'design_id' => $design_id,

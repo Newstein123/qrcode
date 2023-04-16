@@ -20,10 +20,11 @@ return new class extends Migration
             $table->foreignId('template_id')->constrained('templates')->onDelete('cascade');
             $table->json('qr_info');
             $table->string('feedback');
+            $table->string('qr_name');
             $table->date('expired_date');
             $table->tinyInteger('status')->default(0)->comment('0 = active, 1 =ban');
             $table->integer('download_no')->default(0);
-            $table->string('qr_name');
+            $table->integer('pause')->default(0)->comment('0 = no, 1 =yes');
             $table->timestamps();
         });
     }

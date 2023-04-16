@@ -1,6 +1,7 @@
 <div class="container">
     <form id="res_contactless" action="{{route('templateSubmit')}}" method="POST" enctype="multipart/form-data" >
         @csrf
+      <input type="hidden" name="template_name" value="res_contactless_menu">
     <div class="row">
         <div class="col-md-8">
                 <div class="accordion" id="accordionExample">
@@ -16,6 +17,8 @@
                         </div>
                       </div>
                     </div>
+
+                    {{-- Design starts  --}}
                     <div class="accordion-item">
                       <h2 class="accordion-header" id="headingTwo">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -25,9 +28,12 @@
                       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                           <div class="design_container">
+                          <input type="hidden" id="design_id" name="design_id" value="">
                               <div class="row">
-                                  @foreach ($designs as $design)
-                                      <div class="col-md-2 me-2 border template_design_box" data-primary_color="{{$design->primary_color}}"
+                                  @foreach (getDefaultDesignColor() as $design)
+                                      <div class="col-md-2 me-2 border template_design_box" 
+                                      data-design_id="{{$design->id}}"
+                                      data-primary_color="{{$design->primary_color}}"
                                       data-button_color ="{{$design->button_color}}"  
                                       >
                                           <div class="primary_color" style="background-color:  {{$design->primary_color}}"> 
@@ -52,6 +58,7 @@
                         </div>
                       </div>
                     </div>
+                    {{-- Design ends  --}}
 
                     {{-- Basic Information starts  --}}
                     <div class="accordion-item">
@@ -125,6 +132,8 @@
                     <textarea name="feedback" id="feedback" cols="10" rows="5" class="form-control"></textarea>
                 </div>
             </div>
+
+            {{-- Preview Starts  --}}
             <div class="col-md-4">
                 <div class="p-3">
                     <div class="bg-light">
@@ -132,13 +141,7 @@
                         <p id="preview_qr" class="btn btn-primary"> Qr Code </p>
                     </div>
                     <div class="preview_box">
-                        <div class="preview_header">
-                            <p id="preview_company"></p>
-                            <p id="preview_title"></p>
-                            <p id="preview_description"></p>
-                            <p id="preview_website" class="mb-5"></p>
-                          </div>
-                          <button class="mt-5 text-center w-100 border-0" id="preview_button_color"> View PDF </button>
+                        @include('preview_template.res_contactless_menu')
                     </div>
                     <div class="preview_qr text-center" style="display : none">
                       <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('Make me into an QrCode!')) !!} ">
@@ -150,6 +153,8 @@
                     </div>
                 </div>
             </div>
+
+            {{-- Preview Ends  --}}
         <div class="col-md-12">
             <div class="d-flex justify-content-around">
                 <button id="second_back" class="btn btn-primary btn-sm"> Back </button>
@@ -161,33 +166,9 @@
 </div>
 
 
-
+<script src="{{asset('js/style.js')}}"></script>
 <script>  
     $(document).ready(function() {
-      $('.template_design_box').on('click', function() {
-        $(".template_design_box").not(this).removeClass("selected");
-        $(this).addClass('selected');
-        var primary_color = $(this).data('primary_color')
-        var button_color = $(this).data('button_color')
-        $('#primary_color').val(primary_color)
-        $('#button_color').val(button_color)
-        $('.preview_header').css('background-color', primary_color);
-        $('#preview_button_color').css('background-color', button_color);
-      });
-
-  
-      $('#primary_color').on('change', function() {
-        $(".template_design_box").removeClass("selected");
-        var primary_color = $('#primary_color').val()
-        $('.preview_header').css('background-color', primary_color);
-      })
-
-      $('#button_color').on('change', function() {
-        var button_color = $('#button_color').val()
-        $('#preview_button_color').css('background-color', button_color);
-      })
-
-
       var company = $('#company').val()
       var title = $('#title').val()
       var description = $('#description').val()
@@ -217,29 +198,6 @@
         var website = $(this).val()
         $('#preview_website').html(website)
       })
-
-      $('#preview_qr').on('click', function(e) {
-        e.preventDefault()
-        $('.preview_box').hide();
-        $('.preview_qr').show()
-      })
-
-      $('#preview_template').on('click', function(e) {
-        e.preventDefault()
-        $('.preview_qr').hide()
-        $('.preview_box').show();
-      })
-
-      $('#preview_image_file').on('change',function() {
-        var input = this;
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#preview_image').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(input.files[0]);
-        }
-      });
 
     })
 

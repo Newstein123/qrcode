@@ -41,3 +41,4 @@ Route::get('/qr_codes', [QrCodeController::class, 'get_all_qrs'])->name('allQr')
 Route::get('/qr/{id}', [QrCodeController::class, 'show'])->name('viewQr');
 Route::get('/qr_code/{code}', [QrCodeController::class, 'showTemplate'])->name('showTemplate');
 Route::get('/get_preview_template/{name}', [QrCodeController::class, 'get_preview_template'])->name('getPreviewTemplate');
+Route::get('/get_qr_design', [QrCodeController::class, 'get_qr_design']);

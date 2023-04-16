@@ -40,6 +40,7 @@ $(document).ready(function() {
     }
 
     function getTempate(image_name) {
+        console.log(image_name)
         $('#next').on('click', function() {
             $.ajax({
                 url : "/qr/getTemplate",
@@ -63,4 +64,36 @@ function templateSubmit(event) {
     var form = document.querySelector('form')
     var formdata = new FormData(form);
     console.log(formdata)
+}
+
+
+
+$('#qr_style').on('change', function() {
+    var style = $(this).val()
+    var eye = $('#qr_eye_style').val()
+    changeQrStyle(eye, style)
+    
+})
+
+$('#qr_eye_style').on('change', function() {
+    var eye = $(this).val();
+    var style = $('#qr_style').val();
+    changeQrStyle(eye, style)
+})
+
+function changeQrStyle( eye, style) {
+    $('#loading').show()
+    $.ajax({
+        url : '/get_qr_design',
+        method : 'GET',
+        data : {eye : eye, style : style},
+        success : function(data) {
+            // console.log(data)
+            $('#loading').hide()
+            $('.qr-design').html(data)
+        },
+        error : function(e) {
+            console.log(e)
+        }
+    })
 }

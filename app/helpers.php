@@ -16,17 +16,30 @@ function generateRandomString($length = 10) {
 function getTemplate($name) {
     switch ($name) {
         case $name == 'res_contactless_menu':
-            $designs = Design::all();
+            $designs = Design::limit(5)->get();
             return view('template.res_contactless', compact('designs'));
-            break;
-        case 2:
-            echo "The value is 2";
-            break;
-        case 3:
-            echo "The value is 3";
-            break;
+        case $name == 'res_social_media':
+            $designs = Design::limit(5)->get();
+            return view('template.res_social', compact('designs'));
         default:
-            echo "The value is not 1, 2, or 3";
+            return false;
     }
 
+}
+
+
+function storeQrInfo($name, array $info) {
+    switch ($name) {
+        case $name == 'res_contactless_menu':
+            return view('template.res_contactless');
+        case $name == 'res_social_media':
+            return view('template.res_social');
+        default:
+            return false;
+    }
+}
+
+function getDefaultDesignColor() {
+   $designs =  Design::limit(5)->get();
+   return $designs;
 }

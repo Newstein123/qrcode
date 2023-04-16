@@ -16,24 +16,34 @@ class DesignSeeder extends Seeder
     public function run()
     {
         Design::create([
-            'primary_color' => '#FF5733',
-            'button_color' => '#F5D800',
+            'primary_color' => '#ff5733',
+            'button_color' => '#f5d800',
+            'primary_text_color' => '#000000',
+            'button_text_color' => '#000000',
         ]);
         Design::create([
-            'primary_color' => '#3B5998',
-            'button_color' => '#27AE60 ',
+            'primary_color' => '#3b5998',
+            'button_color' => '#27ae60 ',
+            'primary_text_color' => '#000000',
+            'button_text_color' => '#000000',
         ]);
         Design::create([
-            'primary_color' => '#8E44AD',
-            'button_color' => '#F62459',
+            'primary_color' => '#8e44ad',
+            'button_color' => '#f62459',
+            'primary_text_color' => '#ffffff',
+            'button_text_color' => '#ffffff',
         ]);
         Design::create([
-            'primary_color' => '#FFA07A',
-            'button_color' => '#1ABC9C',
+            'primary_color' => '#ffa07a',
+            'button_color' => '#1abc9c',
+            'primary_text_color' => '#000000',
+            'button_text_color' => '#000000',
         ]);
         Design::create([
-            'primary_color' => '#6C7A89',
-            'button_color' => '#3498DB',
+            'primary_color' => '#6c7a89',
+            'button_color' => '#3498db',
+            'primary_text_color' => '#ffffff',
+            'button_text_color' => '#ffffff',
         ]);
     }
 }

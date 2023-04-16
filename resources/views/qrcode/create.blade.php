@@ -32,9 +32,9 @@
                     </select>
                 </div>
                 <div class="row">
-                    <div class="mb-3 col-md-6" id="template">
+                    <div class="mb-3 col-md-8" id="template">
                     </div>
-                    <div class="preview_template col-md-6">
+                    <div class="preview_template col-md-4">
                     </div>
                 </div>
                 <button id="next" class="btn btn-primary btn-sm"> Next </button>
