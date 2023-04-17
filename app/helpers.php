@@ -43,3 +43,8 @@ function getDefaultDesignColor() {
    $designs =  Design::limit(5)->get();
    return $designs;
 }
+
+function hexaToRGB($color) {
+    $rgbColor = sscanf($color, "#%02x%02x%02x"); 
+    return $rgbColor; 
+}

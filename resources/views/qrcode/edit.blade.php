@@ -18,8 +18,9 @@
                     <div class="text-center qr-design">
                         <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('this is qr_code')) !!} ">
                     </div>
+                    <button class="btn btn-pirmary btn-sm"> Download </button>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 qr_main_design">
                     <div class="design-box">
                         <h3> Frame </h3>
                         <p> Some Frame image </p>
@@ -29,27 +30,84 @@
                         <p> Some Print Template </p>
                     </div>
                     <div class="design-box">
-                        <h3> QR Code  </h3>
-                        <select name="" id="qr_style" class="form-control">
-                            <option value="dot"> Dot </option>
-                            <option value="square"> Square </option>
-                            <option value="round"> Round </option>
-                        </select>
-                        <select name="" id="qr_eye_style" class="form-control my-3">
-                            <option value="square"> Square </option>
-                            <option value="circle"> Circle </option>
-                        </select>
+                        <div class="d-flex justify-content-between">
+                            <h3> QR Code  </h3>
+                            <button id="qrstyle_moreoption" class="btn btn-outline-primary btn-sm"> -> more option </button>
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <img class="w-50 qr-style" src="{{asset('qr-code/style.square.png')}}" alt="square">
+                            </div>
+                            <div>
+                                <img class="w-50 qr-style" src="{{asset('qr-code/style.dot.png')}}" alt="dot">
+                            </div>
+                            <div>
+                                <img class="w-50 qr-style" src="{{asset('qr-code/style.round.png')}}" alt="round">
+                            </div>
+                        </div>
                     </div>
                     <div class="design-box">
                         <h3> Logo  </h3>
-                        <p> Some Logo Design   </p>
+                        <form id="qr_logo_upload" enctype="multipart/form-data">
+                            <input type="file" name="qr_logo" id="">
+                            <input type="text" name="name">
+                            <button type="submit"> save </button>
+                        </form>
                     </div>
                     <div class="design-box">
                         <h3>  Short Url </h3>
                         <p> Some Logo Design   </p>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-8 qrstyle_option" style="display : none">
+                    <button id="goBackToMainDesign"> back </button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4> Shape color </h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="code_color"> Code Color </label>
+                                    <input type="color" name="" id="qrcode_color" class="form-control w-25">                          
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="code_color"> Background Color </label>
+                                    <input type="color" name="" id="qrcode_bg_color" value="#ffffff" class="form-control w-25">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4> Shape Style </h4>
+                            <div class="d-flex justify-content-around">
+                                <div>
+                                    <img class="w-50 qr-style" src="{{asset('qr-code/style.square.png')}}" alt="square">
+                                </div>
+                                <div>
+                                    <img class="w-50 qr-style" src="{{asset('qr-code/style.dot.png')}}" alt="dot">
+                                </div>
+                                <div>
+                                    <img class="w-50 qr-style" src="{{asset('qr-code/style.round.png')}}" alt="round">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h4> Eye Style </h4>
+                            <div class="d-flex justify-content-around">
+                                <div>
+                                    <img class="w-50 qr-eye-style" src="{{asset('qr-code/eye.circle.png')}}" alt="circle">
+                                </div>
+                                <div>
+                                    <img class="w-50 qr-eye-style" src="{{asset('qr-code/eye.square.png')}}" alt="square">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Storing the value  --}}
+
+                <input type="hidden" value="square" name="qr_style" id="qr_style_input">
+                <input type="hidden" value="square" name="qreye_style" id="qreye_style_input">
+            </div>      
         </div>
       </div>
     </div>

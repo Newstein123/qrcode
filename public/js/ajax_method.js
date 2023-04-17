@@ -57,43 +57,95 @@ $(document).ready(function() {
         })
     }
 
-})
+    var code_color = $('#qrcode_color').val()
+    var eye = $('#qreye_style_input').val()
+    var code_bg_color = $('#qrcode_bg_color').val() 
 
-function templateSubmit(event) {
-    event.preventDefault()
-    var form = document.querySelector('form')
-    var formdata = new FormData(form);
-    console.log(formdata)
-}
-
-
-
-$('#qr_style').on('change', function() {
-    var style = $(this).val()
-    var eye = $('#qr_eye_style').val()
-    changeQrStyle(eye, style)
-    
-})
-
-$('#qr_eye_style').on('change', function() {
-    var eye = $(this).val();
-    var style = $('#qr_style').val();
-    changeQrStyle(eye, style)
-})
-
-function changeQrStyle( eye, style) {
-    $('#loading').show()
-    $.ajax({
-        url : '/get_qr_design',
-        method : 'GET',
-        data : {eye : eye, style : style},
-        success : function(data) {
-            // console.log(data)
-            $('#loading').hide()
-            $('.qr-design').html(data)
-        },
-        error : function(e) {
-            console.log(e)
-        }
+    $('.qr-style').on('click', function() {
+        $('.qr-style').not(this).removeClass('selected');
+        $(this).addClass('selected');
+        var qr_style = $(this).attr('alt');
+        $('#qr_style_input').val(qr_style)
+        changeQrStyle(eye, qr_style, code_color, code_bg_color)     
     })
-}
+
+    $('#qrstyle_moreoption').on('click', function() {
+        $('.qr_main_design').hide();
+        $('.qrstyle_option').show();   
+        var qr_style_input = $('#qr_style_input').val()
+
+        $('img').each(function() {
+        var altValue = $(this).attr('alt');        
+        if (altValue == qr_style_input) {
+            $(this).addClass('selected');
+        } else {
+            $(this).removeClass('selected');
+        }
+        $('.qr-eye-style').on('click', function() {
+            $('qr-eye-style').not(this).removeClass('selected')
+            $(this).addClass('selected')
+            var qr_eye_style = $(this).attr('alt');
+            $('#qreye_style_input').val(qr_eye_style)
+            changeQrStyle(qr_eye_style, qr_style_input, code_color, code_bg_color)
+        })
+
+        $('#qrcode_color').on('change', function() {
+            var code_color = $(this).val()
+            changeQrStyle(eye, qr_style_input, code_color, code_bg_color)
+        })
+
+
+        $('#qrcode_bg_color').on('change', function() {
+            var code_bg_color = $(this).val();
+            changeQrStyle(eye, qr_style_input, code_color, code_bg_color)
+        })
+        });
+
+    })
+
+    $('#qr_logo_upload').on('submit', function(e) {
+        e.preventDefault()
+        var formData = new FormData(this);
+        $.ajax({
+            url : '/get_qr_design',
+            method : 'GET',
+            data : formData,
+            success : function(data) {
+                // console.log(data)
+                $('#loading').hide()
+                $('.qr-design').html(data)
+            },
+            error : function(e) {
+                console.log(e)
+            }
+        })
+    })
+      
+    function changeQrStyle( eye, style, code_color, code_bg_color) {
+        $('#loading').show()
+        $.ajax({
+            url : '/get_qr_design',
+            method : 'GET',
+            data : {eye : eye, style : style, code_color : code_color, code_bg_color : code_bg_color},
+            success : function(data) {
+                $('#loading').hide()
+                $('.qr-design').html(data)
+            },
+            error : function(e) {
+                console.log(e)
+            }
+        })
+    }
+
+    $('#goBackToMainDesign').on('click', function() {
+        $('.qrstyle_option').hide();
+        $('.qr_main_design').show();
+    })
+
+})
+
+
+
+
+
+

@@ -38,7 +38,7 @@ class QrCodeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         return view('qrcode.create');
     }
 
@@ -50,9 +50,11 @@ class QrCodeController extends Controller
      */
     public function get_qr_design(Request $request)
     {   
+        $code_color = hexaToRGB($request->code_color) ;
+        $code_bg_color = hexaToRGB($request->code_bg_color);
         $eye = $request->eye;
         $style = $request->style;
-        return view('qrcode.qr_design', compact('style', 'eye'));
+        return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color'));
     }
 
     /**
