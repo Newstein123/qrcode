@@ -7,6 +7,8 @@ use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
+use PhpParser\Node\Stmt\Return_;
 
 class QrCodeController extends Controller
 {
@@ -50,12 +52,25 @@ class QrCodeController extends Controller
      */
     public function get_qr_design(Request $request)
     {   
+        if($request->hasFile('image')) {
+            $style = $request->style;
+            $code_color = hexaToRGB($request->code_color);
+            $code_bg_color =hexaToRGB($request->code_bg_color);
+            $eye = $request->eye;
+            $file = $request->file('image');
+            $filename = time() . '_' .$request->file('image')->getClientOriginalName();
+            $path = 'qr-image/';
+            $file->move(public_path($path), $filename);
+            return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color', 'filename'));
+        }
+
         $code_color = hexaToRGB($request->code_color) ;
         $code_bg_color = hexaToRGB($request->code_bg_color);
         $eye = $request->eye;
         $style = $request->style;
         return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color'));
     }
+
 
     /**
      * Display the specified resource.

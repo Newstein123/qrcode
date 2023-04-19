@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $('#qrcode_type').on('change', function() {
         var qrcode_type = $('#qrcode_type').val()
         console.log(qrcode_type);
@@ -57,23 +62,18 @@ $(document).ready(function() {
         })
     }
 
-    var code_color = $('#qrcode_color').val()
-    var eye = $('#qreye_style_input').val()
-    var code_bg_color = $('#qrcode_bg_color').val() 
-
     $('.qr-style').on('click', function() {
         $('.qr-style').not(this).removeClass('selected');
         $(this).addClass('selected');
         var qr_style = $(this).attr('alt');
         $('#qr_style_input').val(qr_style)
-        changeQrStyle(eye, qr_style, code_color, code_bg_color)     
+        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+        changeQrStyle(eye, qr_style, code_color, code_bg_color, image)     
     })
 
     $('#qrstyle_moreoption').on('click', function() {
         $('.qr_main_design').hide();
         $('.qrstyle_option').show();   
-        var qr_style_input = $('#qr_style_input').val()
-
         $('img').each(function() {
         var altValue = $(this).attr('alt');        
         if (altValue == qr_style_input) {
@@ -86,47 +86,52 @@ $(document).ready(function() {
             $(this).addClass('selected')
             var qr_eye_style = $(this).attr('alt');
             $('#qreye_style_input').val(qr_eye_style)
-            changeQrStyle(qr_eye_style, qr_style_input, code_color, code_bg_color)
+            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+            changeQrStyle(eye, style, code_color, code_bg_color, image)
         })
 
         $('#qrcode_color').on('change', function() {
-            var code_color = $(this).val()
-            changeQrStyle(eye, qr_style_input, code_color, code_bg_color)
+            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+            changeQrStyle(eye, style, code_color, code_bg_color, image)
         })
 
-
         $('#qrcode_bg_color').on('change', function() {
-            var code_bg_color = $(this).val();
-            changeQrStyle(eye, qr_style_input, code_color, code_bg_color)
+            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+            changeQrStyle(eye, style, code_color, code_bg_color, image)
         })
         });
 
     })
 
+    function getQrOptionValue() {
+        var style = $('#qr_style_input').val()
+        var code_color = $('#qrcode_color').val()
+        var code_bg_color = $('#qrcode_bg_color').val() 
+        var eye = $('#qreye_style_input').val()
+        var image = $('#imageInput').prop('files')[0]
+        return [style, code_color, code_bg_color, eye, image];
+    }
+
     $('#qr_logo_upload').on('submit', function(e) {
         e.preventDefault()
-        var formData = new FormData(this);
-        $.ajax({
-            url : '/get_qr_design',
-            method : 'GET',
-            data : formData,
-            success : function(data) {
-                // console.log(data)
-                $('#loading').hide()
-                $('.qr-design').html(data)
-            },
-            error : function(e) {
-                console.log(e)
-            }
-        })
+        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+        changeQrStyle(eye, style, code_color, code_bg_color, image)
     })
       
-    function changeQrStyle( eye, style, code_color, code_bg_color) {
+    function changeQrStyle( eye, style, code_color, code_bg_color, image) {
+        var formData = new FormData();
+        formData.append('image', image);
+        formData.append('code_color', code_color);
+        formData.append('code_bg_color', code_bg_color);
+        formData.append('eye', eye);
+        formData.append('style', style);
         $('#loading').show()
         $.ajax({
             url : '/get_qr_design',
-            method : 'GET',
-            data : {eye : eye, style : style, code_color : code_color, code_bg_color : code_bg_color},
+            method : 'POST',
+            data : formData,
+            contentType: false,
+            processData: false,
             success : function(data) {
                 $('#loading').hide()
                 $('.qr-design').html(data)
