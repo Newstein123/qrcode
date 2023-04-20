@@ -198,8 +198,5 @@
         var website = $(this).val()
         $('#preview_website').html(website)
       })
-
     })
-
-
 </script>
