@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Http;
 
 class QrCodeController extends Controller
 {
@@ -41,6 +42,20 @@ class QrCodeController extends Controller
      */
     public function create()
     {   
+        $response = Http::post('https://api.qr-code-generator.com/v1/create?access-token=QwsHvdjsHDrCOP2T7YhllDe6rRESPU02HsCbeMYZd77I4nSpvhKxH_KzPF7JQ2nw', [
+            "frame_name" => "bottom-frame",
+            "qr_code_text" => "https://www.qr-code-generator.com/",
+        ]);
+        
+        if ($response->ok()) {
+            dd($response);
+            // API returned 2xx status code, do something with the response
+            $data = $response->json();
+            dd($data);
+        } else {
+            // API returned an error status code, handle the error
+            $error = $response->status().' '.$response->reason();
+        }
         return view('qrcode.create');
     }
 
