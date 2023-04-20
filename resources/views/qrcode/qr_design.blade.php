@@ -6,7 +6,8 @@
 @if(isset($filename))   
     <div class="text-center">
         <img src="data:image/png;base64, {!! base64_encode(QrCode::style($style ?? 'dot')
-            ->eye($eye ?? 'square')->color($rc, $gc, $bc)
+            ->eye($eye ?? 'square')
+            ->color($rc, $gc, $bc)
             ->backgroundColor($rbg, $gbg, $bbg)
             ->format('png')
             ->merge('/public/qr-image/'.$filename)
@@ -19,5 +20,4 @@
         ->eye($eye ?? 'square')->color($rc, $gc, $bc)->backgroundColor($rbg, $gbg, $bbg)
         ->format('png')->size(200)->generate('this is qr_code')) !!} "> 
 </div>
-
 @endif

@@ -44,4 +44,10 @@
             </div>
         </div>
     </div>
+
+    <form action="{{route('save_qrcode')}}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <input type="file" name="image">
+    <button type="submit"> Save </button>
+    </form>
 @endsection

@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Design;
+use Intervention\Image\Facades\Image;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as SimpleQrCode;
 use App\Models\QrCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Strong;
-use PhpParser\Node\Stmt\Return_;
 
 class QrCodeController extends Controller
 {
@@ -71,7 +70,29 @@ class QrCodeController extends Controller
         return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color'));
     }
 
+    public function save_qrcode(Request $request)
+    {
+        list($colorR, $colorG, $colorB) = hexaToRGB($request->code_color) ;
+        list($bgcolorR, $bgcolorG, $bgcolorB) = hexaToRGB($request->code_bg_color);
+        $eye = $request->eye;
+        $style = $request->style;
+        $image = SimpleQrCode::format('png')
+        ->size(200)
+        ->color($colorR, $colorG, $colorB)
+        ->backgroundColor($bgcolorR, $bgcolorG, $bgcolorB)->eye($eye)->style($style)->generate('Make a qr code with frame');
+        // Save image to file
+        file_put_contents(public_path('qr-image/qrcode-image.png'), $image);
+        // Load image from file
+        $imageFile = public_path('qr-image/qrcode-image.png');
+        $image = Image::make($imageFile);
+        $frame = Image::make(public_path('template_frame.png'));
+        $frame->insert($image, 'center', 0, 50);
+        $frame->save(public_path('qr-image').'/new_qrcode.png');
 
+        return response()->json([
+            'success' => true,
+        ]);
+    }
     /**
      * Display the specified resource.
      *

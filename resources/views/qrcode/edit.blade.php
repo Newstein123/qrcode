@@ -19,12 +19,18 @@
                     <div class="text-center qr-design">
                         <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('this is qr_code')) !!} ">
                     </div>
-                    <button class="btn btn-pirmary btn-sm"> Download </button>
-                </div>
+                    <div class="text-center mt-3">
+                        <button type="button" class="btn btn-pirmary btn-sm"> Download </button>
+                        <button type="button my-3" class="btn btn-warning btn-sm rounded" id="save_qrcode"> Save Your Changes</button>
+                    </div>
+
+                </div> 
                 <div class="col-md-8 qr_main_design">
                     <div class="design-box">
                         <h3> Frame </h3>
-                        <p> Some Frame image </p>
+                        <div>
+                            <img class="w-25 qr-style" src="{{asset('qr-image/new_qrcode.png')}}" alt="scan_me">
+                        </div>
                     </div>
                     <div class="design-box">
                         <h3> Print Template </h3>
