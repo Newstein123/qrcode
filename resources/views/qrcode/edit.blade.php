@@ -1,3 +1,4 @@
+  
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -49,9 +50,8 @@
                     <div class="design-box">
                         <h3> Logo  </h3>
                         <form id="qr_logo_upload" enctype="multipart/form-data">
-                            <input type="file" name="qr_logo" id="">
-                            <input type="text" name="name">
-                            <button type="submit"> save </button>
+                            <input type="file" name="qr_logo" id="imageInput">
+                            <button type="submit" class="btn btn-sm btn-primary"> save </button>
                         </form>
                     </div>
                     <div class="design-box">
@@ -59,8 +59,10 @@
                         <p> Some Logo Design   </p>
                     </div>
                 </div>
+
+                {{-- Qr Option  --}}
                 <div class="col-md-8 qrstyle_option" style="display : none">
-                    <button id="goBackToMainDesign"> back </button>
+                    <button id="goBackToMainDesign" class="btn btn-danger btn-sm"> back </button>
                     <div class="row">
                         <div class="col-md-12">
                             <h4> Shape color </h4>
