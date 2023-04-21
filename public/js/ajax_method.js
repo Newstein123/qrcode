@@ -69,8 +69,7 @@ $(document).ready(function() {
         $(this).addClass('selected');
         var qr_style = $(this).attr('alt');
         $('#qr_style_input').val(qr_style)
-        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-        changeQrStyle(eye, qr_style, code_color, code_bg_color, image)     
+        changeQrStyle()   
     })
 
     $('#qrstyle_moreoption').on('click', function() {
@@ -111,22 +110,37 @@ $(document).ready(function() {
         var code_bg_color = $('#qrcode_bg_color').val() 
         var eye = $('#qreye_style_input').val()
         var image = $('#imageInput').prop('files')[0]
-        return [style, code_color, code_bg_color, eye, image];
-    }
-
-    $('#qr_logo_upload').on('submit', function(e) {
-        e.preventDefault()
-        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-        changeQrStyle(eye, style, code_color, code_bg_color, image)
-    })
-      
-    function changeQrStyle( eye, style, code_color, code_bg_color, image) {
+        var frame = $('#qr_frame_input').val()
         var formData = new FormData();
         formData.append('image', image);
         formData.append('code_color', code_color);
         formData.append('code_bg_color', code_bg_color);
         formData.append('eye', eye);
         formData.append('style', style);
+        formData.append('frame', frame);
+        return formData;
+    }
+
+    $('#qr_logo_upload').on('submit', function(e) {
+        e.preventDefault()
+        changeQrStyle()
+    })
+
+    $('#goBackToMainDesign').on('click', function() {
+        $('.qrstyle_option').hide();
+        $('.qr_main_design').show();
+    })
+
+    $('.qr-frame').on('click', function() {
+        $('.qr-frame').not(this).removeClass('selected')
+        $(this).addClass('selected')
+        var frame = $(this).attr('alt')
+        $('#qr_frame_input').val(frame)
+        changeQrStyle()
+    })
+
+    function changeQrStyle() {
+        var formData = getQrOptionValue()
         $('#loading').show()
         $.ajax({
             url : '/get_qr_design',
@@ -135,6 +149,7 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success : function(data) {
+                // console.log(data)
                 $('#loading').hide()
                 $('.qr-design').html(data)
             },
@@ -144,10 +159,6 @@ $(document).ready(function() {
         })
     }
 
-    $('#goBackToMainDesign').on('click', function() {
-        $('.qrstyle_option').hide();
-        $('.qr_main_design').show();
-    })
 
     $('#save_qrcode').on('click', function() {
         var formData = new FormData;

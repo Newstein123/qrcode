@@ -9,6 +9,8 @@ use App\Models\QrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use function Ramsey\Uuid\v1;
+
 class QrCodeController extends Controller
 {
     /**
@@ -52,22 +54,20 @@ class QrCodeController extends Controller
     public function get_qr_design(Request $request)
     {   
         if($request->hasFile('image')) {
-            $style = $request->style;
-            $code_color = hexaToRGB($request->code_color);
-            $code_bg_color =hexaToRGB($request->code_bg_color);
-            $eye = $request->eye;
             $file = $request->file('image');
             $filename = time() . '_' .$request->file('image')->getClientOriginalName();
             $path = 'qr-image/';
             $file->move(public_path($path), $filename);
-            return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color', 'filename'));
+        } else {
+            $filename = '';
         }
 
+        $frame = $request->frame;
         $code_color = hexaToRGB($request->code_color) ;
         $code_bg_color = hexaToRGB($request->code_bg_color);
         $eye = $request->eye;
         $style = $request->style;
-        return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color'));
+        return view('qrcode.qr_design', compact('style', 'eye', 'code_color', 'code_bg_color', 'frame', 'filename'));
     }
 
     public function save_qrcode(Request $request)
