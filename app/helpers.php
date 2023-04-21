@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Design;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-&$@';
@@ -48,3 +50,11 @@ function hexaToRGB($color) {
     $rgbColor = sscanf($color, "#%02x%02x%02x"); 
     return $rgbColor; 
 }
+
+// function storeQrImgae($path)
+// {
+//     $qr_img = QrCode::format('png')->size(400)->generate();
+//     $qr_filename = time(). '_'.$product_id.'.png';
+//     Storage::disk('public')->put($directory.$qr_filename, $qr_img);
+//     return $qr_filename;
+// }

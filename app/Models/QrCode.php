@@ -16,4 +16,9 @@ class QrCode extends Model
         return $this->belongsTo(Design::class);
     }
 
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
 }

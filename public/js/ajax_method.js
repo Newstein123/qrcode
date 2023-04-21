@@ -1,3 +1,5 @@
+
+
 $(document).ready(function() {
     $.ajaxSetup({
         headers: {
@@ -147,6 +149,28 @@ $(document).ready(function() {
         $('.qr_main_design').show();
     })
 
+    $('#save_qrcode').on('click', function() {
+        var formData = new FormData;
+        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
+        formData.append('image', image);
+        formData.append('code_color', code_color);
+        formData.append('code_bg_color', code_bg_color);
+        formData.append('eye', eye);
+        formData.append('style', style);
+        $.ajax({
+            url : '/save_qrcode',
+            method : 'POST',
+            data : formData,
+            contentType: false,
+            processData: false,
+            success : function(data) {
+                console.log(data)
+            },
+            error : function(e) {
+                console.log(e)
+            }
+        })
+    })
 })
 
 
