@@ -28,8 +28,12 @@
                 <div class="col-md-8 qr_main_design">
                     <div class="design-box">
                         <h3> Frame </h3>
-                        <div>
-                            <img class="w-25 qr-style" src="{{asset('qr-image/new_qrcode.png')}}" alt="scan_me">
+                        <div class="d-flex justify-content-between">
+                            <img src="{{asset('frame1.png')}}" alt="#A0522D" width="100px" class="qr-frame">
+                            <img src="{{asset('frame2.png')}}" alt="#000000" width="100px" class="qr-frame">
+                            <img src="{{asset('frame3.png')}}" alt="#C3D825" width="100px" class="qr-frame">
+                            <img src="{{asset('frame4.png')}}" alt="#DC3545" width="100px" class="qr-frame">
+                            <img src="{{asset('frame5.png')}}" alt="#FFC107" width="100px" class="qr-frame">
                         </div>
                     </div>
                     <div class="design-box">
@@ -115,6 +119,7 @@
 
                 <input type="hidden" value="square" name="qr_style" id="qr_style_input">
                 <input type="hidden" value="square" name="qreye_style" id="qreye_style_input">
+                <input type="hidden" value="" name="qreye_style" id="qr_frame_input">
             </div>      
         </div>
       </div>
