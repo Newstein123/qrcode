@@ -74,7 +74,8 @@ $(document).ready(function() {
 
     $('#qrstyle_moreoption').on('click', function() {
         $('.qr_main_design').hide();
-        $('.qrstyle_option').show();   
+        $('.qrstyle_option').show(); 
+        qr_style_input = $('#qr_style_input').val()
         $('img').each(function() {
         var altValue = $(this).attr('alt');        
         if (altValue == qr_style_input) {
@@ -82,26 +83,25 @@ $(document).ready(function() {
         } else {
             $(this).removeClass('selected');
         }
-        $('.qr-eye-style').on('click', function() {
-            $('qr-eye-style').not(this).removeClass('selected')
-            $(this).addClass('selected')
-            var qr_eye_style = $(this).attr('alt');
-            $('#qreye_style_input').val(qr_eye_style)
-            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-            changeQrStyle(eye, style, code_color, code_bg_color, image)
-        })
-
-        $('#qrcode_color').on('change', function() {
-            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-            changeQrStyle(eye, style, code_color, code_bg_color, image)
-        })
-
-        $('#qrcode_bg_color').on('change', function() {
-            var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-            changeQrStyle(eye, style, code_color, code_bg_color, image)
-        })
         });
 
+    })
+
+    $('.qr-eye-style').on('click', function() {
+        $('.qr-eye-style').not(this).removeClass('selected')
+        $(this).addClass('selected')
+        var qr_eye_style = $(this).attr('alt');
+        console.log(qr_eye_style)
+        $('#qreye_style_input').val(qr_eye_style)
+        changeQrStyle()
+    })
+
+    $('#qrcode_color').on('change', function() {
+        changeQrStyle()
+    })
+
+    $('#qrcode_bg_color').on('change', function() {
+        changeQrStyle()
     })
 
     function getQrOptionValue() {
@@ -118,6 +118,7 @@ $(document).ready(function() {
         formData.append('eye', eye);
         formData.append('style', style);
         formData.append('frame', frame);
+        formData.append('id', 1);
         return formData;
     }
 
@@ -159,15 +160,8 @@ $(document).ready(function() {
         })
     }
 
-
     $('#save_qrcode').on('click', function() {
-        var formData = new FormData;
-        var [style, code_color, code_bg_color, eye, image] = getQrOptionValue();
-        formData.append('image', image);
-        formData.append('code_color', code_color);
-        formData.append('code_bg_color', code_bg_color);
-        formData.append('eye', eye);
-        formData.append('style', style);
+        formData = getQrOptionValue()
         $.ajax({
             url : '/save_qrcode',
             method : 'POST',

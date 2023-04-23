@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('qr_info');
             $table->string('feedback');
             $table->string('qr_name');
+            $table->string('qr_img')->nullable();
             $table->date('expired_date');
             $table->tinyInteger('status')->default(0)->comment('0 = active, 1 =ban');
             $table->integer('download_no')->default(0);

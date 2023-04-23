@@ -16,8 +16,11 @@
                         </div>
                     </div>
                     <p> Scan Me </p>
+                    @php
+                        $qr = App\Models\QrCode::find(1);
+                    @endphp
                     <div class="text-center qr-design">
-                        <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(200)->generate('this is qr_code')) !!} ">
+                        <img src="{{asset('qr-image/'.$qr->qr_img)}}" width="200px" height="200px">
                     </div>
                     <div class="text-center mt-3">
                         <button type="button" class="btn btn-pirmary btn-sm"> Download </button>
