@@ -1,27 +1,28 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container my-3">
-        <h3 class="text-center"> Products Gallery </h3>
-        <div class="row">
-            @foreach ($products as $product)
-                <div class="col-md-3 my-3">
-                    <div class="card">
-                        <div class="card-header">
-                            {{ $product->name }}
-                        </div>
-                        <div class="card-body">
-                            <div class="card-img">
-                                <img src="{{$product->image}}" alt="" class="img-fluid w-100">
+
+            <div class="text-center my-3 p-3 bg-secondary text-white">
+                <h3> Product Gallery </h3>
+            </div>
+            <div class="container">
+                <div class="row">
+                    @if (count($products) > 0)
+                        @foreach ($products as $product)
+                        <div class="col-md-3">
+                            <div class="card my-2">
+                                    <img class="card-img-top" src="{{$product->image}}" alt="Card image cap">
+                                <div class="card-body">
+                                <h5 class="card-title"> {{$product->name}}</h5>
+                                <p class="card-text"> {{$product->type}} </p>
+                                <a href="{{route('productDetail', $product->id)}}" class="btn btn-secondary btn-sm"> More Detail </a>
+                                </div>
                             </div>
-                            <p> <span class="fw-bold"> Type </span> : {{ $product->type}} </p>
                         </div>
-                        <div class="card-footer">
-                            <a href="{{route('productView', $product->qr_name) }}" class="btn btn-secondary"> View Product  </a>
-                        </div>
-                    </div>
+                        @endforeach
+                    @else 
+                        <div class="text-center text-danger"> There is no data </div>
+                    @endif
                 </div>
-            @endforeach
-        </div>
-        {{$products->links() }}  
-    </div>
+                {{$paginator->links()}}
+            </div>
 @endsection
