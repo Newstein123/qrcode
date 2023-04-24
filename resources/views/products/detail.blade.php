@@ -40,6 +40,7 @@
   }
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+@if ($product->publish == 0)
 <div class="container mt-3">
     <div class="ibox-img">   
         @if (count($product->images) > 1)
@@ -132,6 +133,13 @@
         </div>
     </div>     
 </div>
+@else 
+    <div class="container d-flex justify-content-center align-items-center vh-100 flex-column">
+        <img src="{{$product->logo}}" alt="" width="100px" height="100px">
+        <p class="my-3">{{$product->title }}</p>
+        <h3 class="text-danger"> This product is no longer available.</h3>
+    </div>
+@endif
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 <script>
     var splide = new Splide("#main-slider", {

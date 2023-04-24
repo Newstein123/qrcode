@@ -14,7 +14,7 @@ class ProductController extends Controller
         $page = request('page') ?? 1;
         $perpage = request('perpage') ?? 3;
         $client = new Client();
-        $response = $client->request('GET', 'https://chanmyanmar.fwsdemopages.com/api/product?page='.$page.'&perpage='.$perpage);
+        $response = $client->request('GET', 'http://localhost:8000/api/product?page='.$page.'&perpage='.$perpage);
         $statusCode = $response->getStatusCode(); // e.g. 200
         $body = $response->getBody();
         $data = json_decode($body, true);
@@ -37,7 +37,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $client = new Client();
-        $response = $client->request('GET', 'https://chanmyanmar.fwsdemopages.com/api/product/'.$id);
+        $response = $client->request('GET', 'http://localhost:8000/api/product/'.$id);
         $statusCode = $response->getStatusCode(); // e.g. 200
         $body = $response->getBody();
         $data = json_decode($body, true);
