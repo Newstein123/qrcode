@@ -12,7 +12,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {       
         $page = request('page') ?? 1;
-        $perpage = request('perpage') ?? 3;
+        $perpage = request('perpage') ?? 10;
         $client = new Client();
         $response = $client->request('GET', 'http://localhost:8000/api/product?page='.$page.'&perpage='.$perpage);
         $statusCode = $response->getStatusCode(); // e.g. 200
@@ -20,18 +20,25 @@ class ProductController extends Controller
         $data = json_decode($body, true);
         $product_data = $data['data'];
         $total = $data['total'];
-        $products = collect(array_map(function ($item) {
+        $categories = collect(array_map(function ($item) {
             return (object) $item;
         }, $product_data));
 
-        $paginator = new LengthAwarePaginator(
-            $products->forPage($page, $perpage), // data for the current page
-            $total, // total number of items
-            $perpage, // items per page
-            $page, // current page
-            ['path' => $request->url()] // additional query parameters
-        );
-        return view('products.index', compact('products', 'paginator'));
+        $categoryWithProducts = [];
+        foreach ($categories as $category) {
+            if(count($category->product) > 0) {
+                $categoryWithProducts[] = $category;
+            } 
+        }
+ 
+        // $paginator = new LengthAwarePaginator(
+        //     $products->forPage($page, $perpage), // data for the current page
+        //     $total, // total number of items
+        //     $perpage, // items per page
+        //     $page, // current page
+        //     ['path' => $request->url()] // additional query parameters
+        // );
+        return view('products.index', compact('categoryWithProducts'));
     }
 
     public function show($id)
