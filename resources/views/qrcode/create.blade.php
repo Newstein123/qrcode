@@ -21,7 +21,7 @@
             <a href="{{route('allQr')}}" class="btn btn-secondary btn-sm"> See All QR </a>
         </div>
         <!-- In your Blade view -->
-        <img src="data:image/svg+xml;base64,{{ base64_encode($svg_image) }}" alt="QR Code">
+        {{-- <img src="data:image/svg+xml;base64,{{ base64_encode($svg_image) }}" alt="QR Code"> --}}
         <div class="container">
             {{-- Main Box  --}}
             <div id="main_box">
