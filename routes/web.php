@@ -23,6 +23,7 @@ Route::get('/', function () {
 // frontend 
 
 Route::get('/product', [ProductController::class, 'index'])->name('productList');
+Route::get('/productList', [ProductController::class, 'list'])->name('productList');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('productDetail');
 
 // admin 
