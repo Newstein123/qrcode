@@ -10,6 +10,8 @@ use App\Models\QrDesign;
 use BaconQrCode\Encoder\QrCode as EncoderQrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Http;
 
 use function Ramsey\Uuid\v1;
 
@@ -44,6 +46,28 @@ class QrCodeController extends Controller
      */
     public function create()
     {   
+        $response = Http::post('https://api.qr-code-generator.com/v1/create?access-token=QwsHvdjsHDrCOP2T7YhllDe6rRESPU02HsCbeMYZd77I4nSpvhKxH_KzPF7JQ2nw', [
+            "frame_name" => "top-header",
+            "qr_code_text" => "https://www.qr-code-generator.com/",
+            "image_format" => "SVG",
+            "background_color" => "#ffffff",
+            "foreground_color" => "#fa6e79",
+            "marker_right_inner_color" => "#2d7cda",
+            "marker_right_outer_color" => "#00bfff",
+            "marker_left_template" => "version13",
+            "marker_right_template" => "version13",
+            "marker_bottom_template" => "version13",
+            "frame_icon_name" => "app"
+        ]);
+        
+        if ($response->ok()) {
+            $data = simplexml_load_string($response->body());
+            $svg_image = $data->svg->asXML();
+            return view('qrcode.create', compact('svg_image'));
+        } else {
+            // API returned an error status code, handle the error
+            $error = $response->status().' '.$response->reason();
+        }
         return view('qrcode.create');
     }
 

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdminProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ApiProduct\ProductController;
 use App\Http\Controllers\QrCodeController;
 
 /*
@@ -23,7 +23,7 @@ Route::get('/', function () {
 // frontend 
 
 Route::get('/product', [ProductController::class, 'index'])->name('productList');
-Route::get('/fire_qr/{code}', [ProductController::class, 'show'])->name('productView');
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('productDetail');
 
 // admin 
 
