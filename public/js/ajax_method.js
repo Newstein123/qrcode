@@ -142,6 +142,7 @@ $(document).ready(function() {
 
     function changeQrStyle() {
         var formData = getQrOptionValue()
+        $('.qr-design').hide();
         $('#loading').show()
         $.ajax({
             url : '/get_qr_design',
@@ -152,7 +153,7 @@ $(document).ready(function() {
             success : function(data) {
                 // console.log(data)
                 $('#loading').hide()
-                $('.qr-design').html(data)
+                $('.qr-design').show().html(data)
             },
             error : function(e) {
                 console.log(e)

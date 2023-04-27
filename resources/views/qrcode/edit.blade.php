@@ -10,23 +10,20 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-4">
-                    <div id="loading" style="display : none">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
+                    <div id="loading" style="display : none" class="d-flex justify-content-center align-items-center">
+                        <img src="{{asset('mmqr.gif')}}" alt="" width="50px">
                     </div>
-                    <p> Scan Me </p>
                     @php
                         $qr = App\Models\QrCode::find(1);
                     @endphp
                     <div class="text-center qr-design">
+                        <p> Scan Me </p>
                         <img src="{{asset('qr-image/'.$qr->qr_img)}}" width="200px" height="200px">
                     </div>
                     <div class="text-center mt-3">
                         <button type="button" class="btn btn-pirmary btn-sm"> Download </button>
                         <button type="button my-3" class="btn btn-warning btn-sm rounded" id="save_qrcode"> Save Your Changes</button>
                     </div>
-
                 </div> 
                 <div class="col-md-8 qr_main_design">
                     <div class="design-box">

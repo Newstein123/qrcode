@@ -272,4 +272,5 @@ class QrCodeController extends Controller
 
         return redirect()->back();
     }
+
 }
