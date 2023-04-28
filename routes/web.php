@@ -25,6 +25,7 @@ Route::get('/', function () {
 Route::get('/product', [ProductController::class, 'index'])->name('productList');
 Route::get('/productList', [ProductController::class, 'list'])->name('productList');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('productDetail');
+// Route::get('/category', [ProductController::class, 'category'])->name('category');
 
 // admin 
 
@@ -45,8 +46,6 @@ Route::get('/get_preview_template/{name}', [QrCodeController::class, 'get_previe
 Route::post('/get_qr_design', [QrCodeController::class, 'get_qr_design']);
 Route::post('/save_qrcode', [QrCodeController::class, 'save_qrcode'])->name('save_qrcode');
 
-Auth::routes([
-    'verified' => true,
-]);
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
