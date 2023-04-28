@@ -12,9 +12,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {       
         $page = request('page') ?? 1;
-        $perpage = request('perpage') ?? 10;
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:8000/api/product?page='.$page.'&perpage='.$perpage);
+        $response = $client->request('GET', 'https://productqr.fsd.gov.mm/api/product');
         $statusCode = $response->getStatusCode(); // e.g. 200
         $body = $response->getBody();
         $data = json_decode($body, true);
@@ -37,7 +36,7 @@ class ProductController extends Controller
         //     $page, // current page
         //     ['path' => $request->url()] // additional query parameters
         // );
-        return view('products.index', compact('categoryWithProducts'));
+        return view('products.index', compact('categoryWithProducts', 'page'));
     }
 
     public function show($id)

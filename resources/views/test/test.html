@@ -1,13 +1,44 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html>
+    <style>
+       
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #34c2e3;
+          }
+          
+          .wave-container {
+            height: 200px;
+            overflow: hidden;
+          }
+          
+          .wave {
+            height: 100%;
+            width: 200%;
+            position: relative;
+            background-color: #fff;
+            animation: wave 1s linear infinite;
+          }
+          
+          @keyframes wave {
+            0% {
+              transform: translateX(0) translateY(0);
+            }
+            50% {
+              transform: translateX(-50%) translateY(-10px);
+            }
+            100% {
+              transform: translateX(-100%) translateY(0);
+            }
+          }
+          
+    </style>
+  <head>
+    <title>Wave Structure Example</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="wave"></div>
+  </body>
 </html>

@@ -6,6 +6,8 @@ use App\Models\Design;
 use Intervention\Image\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode as SimpleQrCode;
 use App\Models\QrCode;
+use App\Models\QrDesign;
+use BaconQrCode\Encoder\QrCode as EncoderQrCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Stmt\Return_;
@@ -77,9 +79,17 @@ class QrCodeController extends Controller
      */
     public function get_qr_design(Request $request)
     {   
+        $id = $request->id;
+        $qr_design = QrDesign::findOrFail($id);
         if($request->hasFile('image')) {
+            if($qr_design->qr_logo != '') {
+                unlink(public_path('qr-image/'.$qr_design->qr_logo));
+            } 
             $file = $request->file('image');
             $filename = time() . '_' .$request->file('image')->getClientOriginalName();
+            $qr_design->update([
+                'qr_logo' => $filename,
+            ]);
             $path = 'qr-image/';
             $file->move(public_path($path), $filename);
         } else {
@@ -104,6 +114,11 @@ class QrCodeController extends Controller
         ->size(200)
         ->color($colorR, $colorG, $colorB)
         ->backgroundColor($bgcolorR, $bgcolorG, $bgcolorB)->eye($eye)->style($style)->generate('Make a qr code with frame');
+
+        $qr_design = QrDesign::findOrFail($request->id);
+        if($qr_design->qr_img != '') {
+            
+        }
         // Save image to file
         file_put_contents(public_path('qr-image/qrcode-image.png'), $image);
         // Load image from file
@@ -258,7 +273,13 @@ class QrCodeController extends Controller
             );  
         }
 
-        QrCode::create([
+        // Storing Qr image 
+
+        $qr_image = SimpleQrCode::format('png')->generate('this is some link to direct');
+        $qr_filename = time(). '_'.'qr_image.png';
+        file_put_contents(public_path('qr-image/'.$qr_filename), $qr_image);
+
+        $qr_code = QrCode::create([
             'design_id' => $design_id,
             'template_id' => $template_id,
             'user_id' => $user_id,
@@ -266,8 +287,14 @@ class QrCodeController extends Controller
             'feedback' => $feedback,
             'expired_date' => now()->addDay(15),
             'qr_name' => $qr_name,
+            'qr_img' => $qr_filename,
+        ]);
+
+        QrDesign::create([
+            'qr_code_id' => $qr_code->id,
         ]);
 
         return redirect()->back();
     }
+
 }
