@@ -30,7 +30,6 @@ class ProductController extends Controller
                 $categoryWithProducts[] = $category;
             } 
         }
- 
         // $paginator = new LengthAwarePaginator(
         //     $products->forPage($page, $perpage), // data for the current page
         //     $total, // total number of items
