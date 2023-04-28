@@ -9,6 +9,7 @@
     color : #e02b20;
     border-left: 5px solid #e02b20;
   }
+
 </style>
     <div class="container my-3">
       <div class="row">
@@ -55,8 +56,10 @@
                     </h3>
                 </div>
             @endif
+        <div class="col-md-12 mt-3">
+          {{  $paginator->links('products.paginationui') }}
         </div>
-        {{ $paginator->links() }}
+        </div>
         </div>
       </div>
     </div>

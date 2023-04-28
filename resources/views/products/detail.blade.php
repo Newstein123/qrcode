@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @if($product->publish == 0) 
     <section class="page-design bg-light">
         <div class="container mt-5">
@@ -14,11 +15,11 @@
             @endforeach
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-danger p-3 rounded-circle" aria-hidden="true"></span>
+            <span class="py-2 px-3 bg-danger rounded-circle" aria-hidden="true"> <i class="fa-solid fa-angle-left" style="font-size : 20px"></i> </span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-danger p-3 rounded-circle" aria-hidden="true"></span>
+            <span class="py-2 px-3 bg-danger rounded-circle" aria-hidden="true" style="font-size : 20px"> <i class="fa-solid fa-angle-right"></i>   </span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
@@ -98,3 +99,4 @@
     </div>
 @endif
 @endsection
+carousel-control-prev-icon bi bi-chevron-left

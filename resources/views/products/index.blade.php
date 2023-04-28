@@ -54,7 +54,7 @@
                                                   </li>
                                               
                                                   @for ($i = 1; $i <= $totalPages; $i++)
-                                                    <li class="page-item{{ $currentPage == $i ? ' active' : '' }}">
+                                                    <li class="page-item{{ $currentPage == $i ? ' active' : '' }} page-number" style="display : none">
                                                       <a class="page-link" href="?page={{ $i }}">{{ $i }}</a>
                                                     </li>
                                                   @endfor
