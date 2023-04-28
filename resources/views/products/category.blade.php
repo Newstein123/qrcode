@@ -7,6 +7,7 @@
 
   .active {
     color : #e02b20;
+    border-left: 5px solid #e02b20;
   }
 </style>
     <div class="container my-3">
@@ -14,11 +15,18 @@
         <div class="col-md-3">
           <ul class="nav flex-column">
             <li class="nav-item"> 
-                <a href="/product" class="nav-link {{ url()->full() == url('/product') ? 'active' : '' }}"> Alll </a>
+                <a href="/product" class="nav-link {{ request()->is('product*') && !request()->has('category') ? 'active' : '' }}"> Alll </a>
             </li>    
             @foreach ($categories as $category)
-                    <li class="nav-item {{ url()->full() == url('/product?category='.$category['id']) ? 'active' : '' }} ">
-                        <a href="/product?category={{$category['id']}}" class="nav-link"> {{ $category['name'] }} </a>
+            {{-- @php
+                if(request()->has('category') && request('category') == $category['id']) {
+                  dd('active');
+                } else {
+                  dd('not active ');
+                }
+            @endphp --}}
+                    <li class="nav-item">
+                        <a href="/product?category={{$category['id']}}" class="nav-link  {{ request()->has('category') && request('category') == $category['id'] ? 'active' : ''}} "> {{ $category['name'] }} </a>
                     </li>
             @endforeach
           </ul>

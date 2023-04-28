@@ -40,9 +40,10 @@ class ProductController extends Controller
     // }
 
     public function show($id)
-    {
+    {   
+        dd("hello");
         $client = new Client();
-        $response = $client->request('GET', 'http://localhost:8000/api/product/'.$id);
+        $response = $client->request('GET', 'https://productqr.fsd.gov.mm/api/product/'.$id);
         $statusCode = $response->getStatusCode(); // e.g. 200
         $body = $response->getBody();
         $data = json_decode($body, true);
